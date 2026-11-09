@@ -1,0 +1,14 @@
+# ファイルの用途: Dockerイメージ構築時に不要・機密なファイルをCOPY対象から除外する。
+# 主な処理: ホスト固有の依存パッケージ、ビルド結果、Git情報、APIキーをビルドへ混入させない。
+
+node_modules
+.next
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+*.zip
+*.tar.gz
+*.tsbuildinfo
+.DS_Store

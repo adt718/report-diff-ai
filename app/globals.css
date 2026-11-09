@@ -1,0 +1,614 @@
+/*
+ * ファイルの用途: 全画面で共通利用するスタイルシート。
+ * 主な処理: 色・文字・フォーム・比較表・PDFプレビュー・レスポンシブ表示を定義する。
+ * 補足: Reactコンポーネント側のclassNameに対応する見た目をここで管理する。
+ */
+
+/*
+ * CSSの担当範囲:
+ * - 共通色・文字、ヘッダー、アップロード、差分テーブル、PDFプレビュー
+ * - 画面幅720px以下は末尾の@mediaでレスポンシブ対応
+ * - classNameはapp/page.tsxで利用している
+ */
+:root {
+  font-family:Arial,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  color:#19263b;
+  background:#f5f7fb;
+  font-synthesis:none;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+}
+
+button,input {
+  font:inherit;
+}
+
+button {
+  cursor:pointer;
+}
+
+button:disabled {
+  cursor:not-allowed;
+  opacity:.55;
+}
+
+.shell {
+  max-width:1160px;
+  padding:0 26px;
+  margin:auto;
+}
+
+.topbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:82px;
+  border-bottom:1px solid #e2e8f0;
+}
+
+.brand {
+  font-size:19px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.brand small {
+  font-size:11px;
+  font-weight:500;
+  display:block;
+  color:#7d8a9a;
+  letter-spacing:0;
+  margin-top:3px;
+}
+
+.brandmark {
+  display:inline-flex;
+  background:#3156d9;
+  color:white;
+  border-radius:11px;
+  width:39px;
+  height:39px;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+}
+
+.topchip {
+  border:1px solid #d3ddea;
+  background:#fff;
+  border-radius:20px;
+  padding:6px 13px;
+  color:#64748b;
+  font-size:12px;
+}
+
+.hero {
+  padding:58px 0 34px;
+}
+
+.eyebrow {
+  text-transform:uppercase;
+  letter-spacing:2.8px;
+  font-size:11px;
+  font-weight:800;
+  color:#5171d5;
+}
+
+.hero h1 {
+  font-size:clamp(30px,4.4vw,50px);
+  margin:16px 0;
+  line-height:1.36;
+  letter-spacing:-1.5px;
+}
+
+.hero h1 em {
+  font-style:normal;
+  color:#3156d9;
+}
+
+.hero p {
+  color:#64748b;
+  font-size:14px;
+  line-height:1.9;
+}
+
+.panel {
+  background:white;
+  border:1px solid #e3e8f0;
+  box-shadow:0 6px 28px #253a6510;
+  border-radius:18px;
+  padding:27px 30px;
+  margin:24px 0;
+}
+
+.panel-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+
+.panel h2 {
+  margin:0;
+  font-size:17px;
+  font-weight:800;
+  color:#3156d9;
+}
+
+.panel h2 span {
+  color:#1c2d4a;
+  margin-left:8px;
+}
+
+.small {
+  font-size:12px;
+}
+
+.muted {
+  color:#8390a2;
+}
+
+.upload-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:17px;
+}
+
+.droparea {
+  min-height:173px;
+  border:1.5px dashed #aebbd0;
+  border-radius:13px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:9px;
+  position:relative;
+  background:#fafbfe;
+  text-align:center;
+  cursor:pointer;
+  padding:18px;
+}
+
+.droparea:hover {
+  border-color:#5276e5;
+  background:#f5f8ff;
+}
+
+.droparea input {
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+  width:100%;
+}
+
+.droparea strong {
+  font-size:14px;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+
+.droparea span:not(.file-badge):not(.drop-symbol) {
+  font-size:12px;
+  color:#7f8b9b;
+}
+
+.drop-symbol {
+  color:#7d92c5;
+  font-size:33px;
+}
+
+.file-badge {
+  position:absolute;
+  top:12px;
+  left:14px;
+  font-size:10px;
+  font-weight:700;
+  padding:5px 9px;
+  border-radius:20px;
+}
+
+.source-badge {
+  color:#3362c6;
+  background:#e8f0ff;
+}
+
+.target-badge {
+  color:#7e64bb;
+  background:#f0eafb;
+}
+
+.options-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  padding:23px 0;
+}
+
+.mode-options {
+  border:0;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.mode-options legend {
+  font-weight:800;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.mode-options label {
+  font-size:12px;
+  color:#44546a;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.mode-options input,.ai-option input {
+  accent-color:#3156d9;
+}
+
+.ai-option {
+  display:flex;
+  gap:10px;
+  padding:15px;
+  background:#f7f9fc;
+  border-radius:12px;
+  align-items:start;
+}
+
+.ai-option span {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.ai-option strong {
+  font-size:13px;
+}
+
+.ai-option small {
+  color:#718098;
+  font-size:11px;
+  line-height:1.7;
+}
+
+.primary-btn {
+  background:#3156d9;
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:13px 25px;
+  font-weight:800;
+  font-size:13px;
+  box-shadow:0 7px 17px #3156d92e;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background:#2145c3;
+}
+
+.privacy-note {
+  color:#8794a5;
+  font-size:11px;
+  line-height:1.8;
+  margin:15px 0 0;
+}
+
+.error-message {
+  color:#b91c1c;
+  font-size:13px;
+  background:#fff0f0;
+  padding:11px;
+  border-radius:9px;
+}
+
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:13px;
+}
+
+.stat {
+  background:#f4f7fc;
+  border-radius:11px;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.stat b {
+  font-size:30px;
+  color:#3156d9;
+}
+
+.stat span {
+  font-size:11px;
+  color:#718098;
+}
+
+.stat.red b {
+  color:#da4555;
+}
+
+.stat.orange b {
+  color:#d3922c;
+}
+
+.explain {
+  color:#607086;
+  font-size:12px;
+  margin:21px 0;
+}
+
+.tabbar {
+  display:flex;
+  gap:6px;
+  margin:22px 0 0;
+}
+
+.tabbar button,.preview-switch button {
+  background:transparent;
+  border:0;
+  border-radius:8px;
+  padding:10px 13px;
+  color:#68768a;
+  font-size:12px;
+}
+
+.tabbar button.selected,.preview-switch button.selected {
+  background:#ebf0ff;
+  color:#3156d9;
+  font-weight:800;
+}
+
+.table-wrap {
+  overflow-x:auto;
+}
+
+.differences {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+  text-align:left;
+}
+
+.differences th {
+  padding:14px 12px;
+  color:#75849b;
+  font-weight:700;
+  border-bottom:1px solid #e5e9f0;
+  white-space:nowrap;
+  background:#f9fbff;
+}
+
+.differences td {
+  border-bottom:1px solid #edf0f5;
+  padding:16px 12px;
+  vertical-align:top;
+  min-width:120px;
+}
+
+.differences td:first-child {
+  min-width:140px;
+}
+
+.differences td strong {
+  display:block;
+}
+
+.differences td small {
+  font-size:10px;
+  color:#9aa5b4;
+  display:block;
+  margin-top:6px;
+}
+
+.cell-text {
+  line-height:1.65;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  max-width:310px;
+  max-height:100px;
+  overflow:auto;
+}
+
+.page-link {
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#3156d9;
+  font-size:11px;
+  margin-top:7px;
+  text-decoration:underline;
+}
+
+.pill {
+  display:inline-block;
+  border-radius:30px;
+  padding:5px 10px;
+  font-weight:700;
+  white-space:nowrap;
+  font-size:11px;
+}
+
+.pill.ok {
+  background:#e6f6ec;
+  color:#1a8550;
+}
+
+.pill.bad {
+  background:#ffebee;
+  color:#c63b47;
+}
+
+.pill.warn {
+  background:#fff4e1;
+  color:#ac761c;
+}
+
+.pill.note {
+  background:#edf3fb;
+  color:#53749d;
+}
+
+.empty {
+  text-align:center;
+  color:#8b97a8;
+  padding:30px!important;
+}
+
+.warning-panel {
+  background:#fffaf0;
+  border:1px solid #fff0cf;
+  padding:16px 20px;
+  border-radius:11px;
+  margin-top:20px;
+  font-size:12px;
+  color:#725d34;
+  line-height:1.8;
+}
+
+.warning-panel ul {
+  padding-left:22px;
+  margin:6px 0 0;
+}
+
+.ai-tag {
+  background:#edf0ff;
+  border-radius:18px;
+  padding:5px 9px;
+  color:#5568b6;
+  font-size:11px;
+}
+
+.ai-overview {
+  line-height:1.9;
+  color:#344760;
+  font-size:14px;
+}
+
+.ai-finding {
+  border:1px solid #e8edf3;
+  padding:17px;
+  margin-top:13px;
+  border-radius:11px;
+}
+
+.finding-head {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:13px;
+}
+
+.ai-finding p {
+  font-size:12px;
+  line-height:1.85;
+  color:#5f7088;
+}
+
+.evidence-links {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.evidence-links button {
+  color:#3156d9;
+  font-size:11px;
+  border:0;
+  background:#f1f5ff;
+  border-radius:8px;
+  padding:8px 10px;
+}
+
+.preview-switch {
+  display:flex;
+  gap:4px;
+}
+
+.pdf-frame {
+  width:100%;
+  height:650px;
+  border:1px solid #e2e8f0;
+  border-radius:10px;
+  background:#e9edf4;
+}
+
+.footer {
+  color:#95a0af;
+  text-align:center;
+  font-size:11px;
+  padding:30px 0 50px;
+}
+
+@media(max-width:720px) {
+  .shell {
+    padding:0 15px;
+  }
+  .hero {
+    padding:35px 0 18px;
+  }
+  .panel {
+    padding:20px 15px;
+    border-radius:14px;
+  }
+  .upload-grid,.options-grid {
+    grid-template-columns:1fr;
+  }
+  .stats-grid {
+    grid-template-columns:repeat(2,1fr);
+  }
+  .desktop {
+    display:none;
+  }
+  .pdf-frame {
+    height:420px;
+  }
+  .hero h1 {
+    letter-spacing:-.5px;
+  }
+}
+
+/* 必須のAI実行条件を、チェックボックスではなく固定ステータスで明示する。 */
+.mandatory-mark {
+  flex:none;
+  display:inline-flex;
+  width:25px;
+  height:25px;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  color:#fff;
+  background:#3156d9;
+  font-size:15px;
+  font-weight:800;
+}
+.required-tag {
+  display:inline-block;
+  margin-left:6px;
+  background:#e5eefd;
+  color:#3156d9;
+  font-size:10px;
+  padding:3px 7px;
+  border-radius:999px;
+  vertical-align:middle;
+}

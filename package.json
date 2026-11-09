@@ -1,0 +1,35 @@
+{
+  "description": "ReportDiff AI: Next.js App Routerによる月次作業報告書PDFの正本比較（必須LLM/RAG・Docker開発環境・自動テスト）",
+  "name": "report-diff-ai",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run test:core",
+    "test:core": "node --experimental-strip-types --test tests/compare.test.mjs tests/ai-guard.test.mjs tests/rag-core.test.mjs tests/flow.test.mjs",
+    "test:pdf": "node --experimental-strip-types --test tests/pdf.test.mjs",
+    "test:smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "next": "^16.4.5",
+    "openai": "^6.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "unpdf": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.5",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=24 <26"
+  }
+}

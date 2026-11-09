@@ -1,0 +1,28 @@
+# ファイルの用途: Docker Desktop + WSL2上でNext.js開発コンテナを起動する。
+# 主な処理: ポート転送、ソースコード共有、node_modules/.nextの永続化、OpenAI環境変数の注入。
+# 補足: PostgreSQLやpgvectorは現段階で未実装のため含めていない。
+
+name: report-diff-ai
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      # Windows側から http://localhost:3000 でアクセスする。
+      - "127.0.0.1:3000:3000"
+    env_file:
+      # ホスト上の.env.localを読み込み、Node.jsサーバーへAPIキーを渡す。
+      - .env.local
+    volumes:
+      # Ubuntuのプロジェクトフォルダーにあるソースコードをコンテナへ反映する。
+      - .:/app
+      # コンテナ専用の依存パッケージとNext.jsビルドキャッシュ。
+      - node_modules:/app/node_modules
+      - next_cache:/app/.next
+    command: ["npm", "run", "dev", "--", "--hostname", "0.0.0.0"]
+
+volumes:
+  node_modules:
+  next_cache:

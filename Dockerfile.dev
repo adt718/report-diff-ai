@@ -1,0 +1,19 @@
+# ファイルの用途: Next.jsアプリをLinuxコンテナ上で開発するためのDockerイメージを作成する。
+# 主な処理: Node.js 24環境へnpm依存パッケージを導入し、開発サーバーを起動できるようにする。
+# 補足: 学習用の開発イメージ。実運用時は本番向けのマルチステージビルドを別途設計する。
+
+FROM node:24-bookworm-slim
+
+WORKDIR /app
+
+# package-lock.jsonが存在する場合はnpm ciで依存バージョンを厳密に再現する。
+# 初回（ロックファイル未作成時）のみnpm installを使用する。
+COPY package*.json ./
+RUN if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; \
+    else npm install --no-audit --no-fund; fi
+
+# ソースコードをイメージに含める。開発時はComposeのbind mountでホストの変更を反映する。
+COPY . .
+
+EXPOSE 3000
+CMD ["npm", "run", "dev", "--", "--hostname", "0.0.0.0"]
