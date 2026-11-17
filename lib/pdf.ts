@@ -45,9 +45,7 @@ export async function parsePdf(file: File): Promise<Report> {
 
     // テキストをページ番号とセットで保持すると、差分から原文を開ける。
     const extracted = await extractText(document);
-    const texts = Array.isArray(extracted.text)
-      ? extracted.text
-      : [extracted.text];
+    const texts = Array.isArray(extracted.text) ? extracted.text : [extracted.text];
     const pages = texts.map((text, index) => ({ page: index + 1, text }));
 
     // 入力サイズだけでなく、抽出後の文字数にも上限をかける。
@@ -56,9 +54,7 @@ export async function parsePdf(file: File): Promise<Report> {
       throw new Error(`${file.name}: 抽出テキストが多すぎます。`);
     }
     if (chars < 20) {
-      throw new Error(
-        `${file.name}: 文字を抽出できません。スキャンPDFにはOCRが必要です。`,
-      );
+      throw new Error(`${file.name}: 文字を抽出できません。スキャンPDFにはOCRが必要です。`);
     }
 
     return {
@@ -68,16 +64,9 @@ export async function parsePdf(file: File): Promise<Report> {
       fields: extractFields(pages),
     };
   } finally {
-    /**
-     * PDF解析後に使用したリソースを解放する。
-     *
-     * PDFDocumentProxyの型定義によっては、
-     * destroy()メソッドが定義されていない場合があるため、
-     * 実行前にメソッドの存在と型を確認する。
-     */
-    if ("destroy" in document && typeof document.destroy === "function") {
-      // 解析成功・失敗のいずれでもPDF.jsのリソースを解放する。
-      await document.destroy();
-    }
+    if ( "destroy" in document && typeof document.destroy === "function") {
+    // 解析成功・失敗のいずれでもPDF.jsのリソースを解放する。
+    await document.destroy();
   }
+}
 }
